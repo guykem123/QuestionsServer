@@ -1,0 +1,327 @@
+swagger: "2.0"
+info:
+  description: API For Questions
+  version: "0.2.0"
+  title: Node Rest API documentation
+  termsOfService: "http://swagger.io/terms/"
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: localhost:3000
+basePath: /
+schemes:
+  - http
+
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth Module
+      summary: register
+      description: API for New User
+      parameters:
+        - in: body
+          name: body
+          description: register Payload
+          required: true
+          schema:
+            $ref: "#/RequestDefinitions/RegisterModel"
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: User Created Successfully
+        "409":
+          description: user already exist,try again
+        "500":
+          description: Failure to create user
+
+  /auth/login:
+    post:
+      tags:
+        - Auth Module
+      summary: LogIn
+      description: API for LogIn
+      parameters:
+        - in: body
+          name: body
+          description: LogIn Payload
+          required: true
+          schema:
+            $ref: "#/RequestDefinitions/RegisterModel"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Authorize successful
+          schema:
+            $ref: "#/ResponseDefinitions/LogInApiResponse"
+        "401":
+          description: Password or Username is Incorrect
+        "500":
+          description: Auth failed
+
+  /auth/change-password:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Auth Module
+      summary: Change password
+      description: API for Changing password
+      parameters:
+        - in: body
+          name: body
+          description: Changing password Payload
+          required: true
+          schema:
+            $ref: "#/RequestDefinitions/ChangePassword"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Authorize successful
+        "401":
+          description: Password or Username is Incorrect
+        "500":
+          description: Auth failed
+
+  /qa:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Questions Module
+      summary: Get All Questions
+      description: API for Get All Questions
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: post Created Successfully
+          schema:
+            $ref: "#/ResponseDefinitions/getQuestionsResponse"
+        "500":
+          description: Failed to get all Questions
+  /qa/{id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Questions Module
+      summary: Get a Question
+      description: API for Get Question
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: "question id"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: post Created Successfully
+          schema:
+            $ref: "#/ResponseDefinitions/getQuestionResponse"
+        "409":
+          description: Question is not exist
+        "500":
+          description: Failure to get Question
+  /qa/create:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Questions Module
+      summary: Create a Question
+      description: API for create a Question
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Create Question Payload
+          required: true
+          schema:
+            $ref: "#/RequestDefinitions/QuestionCreationModel"
+      responses:
+        "200":
+          description: Question Added
+        "409":
+          description: Question already exist
+        "500":
+          description: Failure to create Question
+  /qa/update/{id}:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Questions Module
+      summary: Update a Question
+      description: API for update a Question
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Update Question Payload
+          required: true
+          schema:
+            $ref: "#/RequestDefinitions/QuestionCreationModel"
+        - in: path
+          name: id
+          description: "question id"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: post Created Successfully
+          schema:
+            $ref: "#/ResponseDefinitions/updateQuestionResponse"
+        "409":
+          description: Question is not exist
+        "500":
+          description: Failure to update Question
+  /qa/restart:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Questions Module
+      summary: restart all Questions
+      description: API for restart all Questions in db
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Question restarted
+        "500":
+          description: Failure to restart Questions
+
+  /qa/delete/{id}:
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Questions Module
+      summary: Delete a Question
+      description: API for delete a Question
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: "question id"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Question has been deleted
+        "409":
+          description: Question is not exist
+        "500":
+          description: Failure to delete Question
+
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+
+definitions:
+  Question:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      creationDate:
+        type: string
+        format: date-time
+      description:
+        type: string
+
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+      username:
+        type: string
+  UserDTO:
+    type: object
+    properties:
+      id:
+        type: string
+      username:
+        type: string
+      password:
+        type: string
+
+RequestDefinitions:
+  RegisterModel:
+    properties:
+      username:
+        type: string
+        description: name of user
+      password:
+        type: string
+        description: password of the user
+        
+  ChangePassword:
+    properties:
+      username:
+        type: string
+        description: name of user
+      oldPassword:
+        type: string
+        description: old Password of the user
+      newPassword:
+        type: string
+        description: new Password of the user
+  
+  QuestionCreationModel:
+     properties:
+      name:
+        type: string
+      creationDate:
+        type: string
+        format: date-time
+      description:
+        type: string
+
+ResponseDefinitions:
+  LogInApiResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      token:
+        type: string  
+      user:
+         $ref: "#/definitions/User"
+
+  getQuestionsResponse:
+    type: array
+    items:
+      $ref: "#/definitions/Question"
+  
+  getQuestionResponse:
+    type: object
+    properties:
+      qa:
+        $ref: "#/definitions/Question"
+        
+  updateQuestionResponse:
+    type: object
+    properties:
+      newQuestion:
+        $ref: "#/definitions/Question"
+
