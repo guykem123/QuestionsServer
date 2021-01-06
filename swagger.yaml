@@ -169,7 +169,7 @@ paths:
           description: Update Question Payload
           required: true
           schema:
-            $ref: "#/RequestDefinitions/QuestionCreationModel"
+            $ref: "#/RequestDefinitions/QuestionUpdateModel"
         - in: path
           name: id
           description: "question id"
@@ -292,6 +292,13 @@ RequestDefinitions:
       creationDate:
         type: string
         format: date-time
+      description:
+        type: string
+
+  QuestionUpdateModel:
+     properties:
+      name:
+        type: string
       description:
         type: string
 
