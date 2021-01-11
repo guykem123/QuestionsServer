@@ -4,7 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Run Server
 
-First Run `npm i` or `npm install` and then Run `npm start`. the server will run on `http://localhost:3000/`.
+First Run `npm i` or `npm install`, and then Run `npm start` to run the server Locally.
+the server will run on port 3000 - `http://localhost:3000/`.
 
 ## Swagger
 
