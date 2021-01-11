@@ -306,8 +306,6 @@ ResponseDefinitions:
   LogInApiResponse:
     type: object
     properties:
-      status:
-        type: integer
       message:
         type: string
       token:

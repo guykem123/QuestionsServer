@@ -1,10 +1,1 @@
-{
-    "users": [
-        {
-            "username": "admin",
-            "password": "$2a$11$WGtAu89AnEplmejv56QyIeDUki7WuJ1Jc1Pg2ZFyGdEcIM4UWIvyq",
-            "id": "U1"
-        }
-    ],
-    "identity": 6
-}
+{"users":[{"username":"admin","password":"$2a$11$WGtAu89AnEplmejv56QyIeDUki7WuJ1Jc1Pg2ZFyGdEcIM4UWIvyq","id":"U1"},{"username":"guy","password":"$2a$10$tKVRHNHC.r3ilviZl08kTe3.85RvrKDmd1YUbC39.Cqdua2d8unMi","id":"U6"}],"identity":7}
