@@ -16,15 +16,16 @@ const getAllQuestions = async (req, res) => {
 
 const addQuestion = async (req, res) => {
     try {
-        const qa = await db.findQuestion(req.body.name)
-        if (qa) {
+        const currentQa = await db.findQuestion(req.body.name)
+        if (currentQa) {
             return res.status(409).json({
                 message: "Question already exist"
             });
         }
-        await db.addQuestion(req.body)
-        return res.status(200).json({
-            message: "Question Added"
+        const qa = await db.addQuestion(req.body)
+        return res.status(201).json({
+            message: "Question Added",
+            qa
         });
     } catch (error) {
         return res.status(500).json({

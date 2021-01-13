@@ -14,7 +14,7 @@ async function getAllQuestions() {
 }
 
 async function addQuestion(question) {
-  await addToQuestions(question)
+  return await addToQuestions(question)
 }
 
 async function updateQuestion(qId, newUser) {
@@ -51,7 +51,8 @@ function addToQuestions(question) {
     const questions = questionsDb.questions;
     questions.push(question)
     let data = JSON.stringify(questionsDb);
-    return fs.writeFileSync(fileName, data);
+    fs.writeFileSync(fileName, data);
+    return question
   })
 }
 

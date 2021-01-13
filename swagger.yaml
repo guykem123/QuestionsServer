@@ -147,8 +147,10 @@ paths:
           schema:
             $ref: "#/RequestDefinitions/QuestionCreationModel"
       responses:
-        "200":
+        "201":
           description: Question Added
+          schema:
+            $ref: "#/ResponseDefinitions/updateQuestionResponse"
         "409":
           description: Question already exist
         "500":
@@ -329,4 +331,11 @@ ResponseDefinitions:
     properties:
       newQuestion:
         $ref: "#/definitions/Question"
+  addQuestionResponse:
+    type: object
+    properties:
+      qa:
+        $ref: "#/definitions/Question"
+      message:
+        type: string
 
