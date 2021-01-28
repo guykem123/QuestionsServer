@@ -56,6 +56,12 @@ const updateQuestion = async (req, res) => {
     try {
         let qa = await db.findQuestion(req.params.id)
         if (qa) {
+            let qaWithUpdateName = await db.findQuestion(req.params.name)
+            if(qaWithUpdateName){
+                return res.status(409).json({
+                    message: "Question new Name already exist"
+                });
+            }
             qa = await db.updateQuestion(req.params.id, req.body)
             return res.status(200).json({
                 newQuestion: qa
